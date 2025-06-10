@@ -42,6 +42,14 @@ class _CryptoPageState extends State<CryptoPage> with TickerProviderStateMixin {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _rotationController.dispose();
+    _pulseController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -65,6 +73,8 @@ class _CryptoPageState extends State<CryptoPage> with TickerProviderStateMixin {
                     Expanded(
                       child: Center(child: _buildCentral3DVisualization()),
                     ),
+
+                    _buildBottomSection(),
                   ],
                 ),
               ),
@@ -72,6 +82,115 @@ class _CryptoPageState extends State<CryptoPage> with TickerProviderStateMixin {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildBottomSection() {
+    return Column(
+      children: [
+        Text(
+          'Discover the Future',
+          style: TextStyle(
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        ShaderMask(
+          shaderCallback: (bounds) =>
+              LinearGradient(colors: [Color(0xFF6366F1), Color(0xFF8B5cF6)])
+                  .createShader(bounds),
+          child: Text(
+            'Dwaipayan Biswas',
+            style: TextStyle(
+                fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        SizedBox(
+          height: 24,
+        ),
+        Text(
+          'Experience seamless crypto trading with advanced\nsecurity and intuitive design. Join millions of users\nwho trust our platform for their digital\n investments.',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 16, color: Color(0xFF9CA3AF), height: 1.6),
+        ),
+        SizedBox(
+          height: 40,
+        ),
+        Row(
+          children: [
+            Expanded(
+                child: AnimatedBuilder(
+                    animation: _pulseAnimation,
+                    builder: (context,child) {
+                      return Transform.scale(
+                        scale: 1 + (_pulseAnimation.value - 1) * 0.08,
+                        child: Container(
+                          height: 56,
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(colors: [
+                                Color(0xFF6366F1),
+                                Color(0xFF8B5CF6),
+                              ]),
+                              borderRadius: BorderRadius.circular(28),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Color(0xFF6366F1).withOpacity(.4),
+                                    blurRadius: 20,
+                                    offset: Offset(0, 8))
+                              ]),
+                          child: ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.transparent,
+                                  shadowColor: Colors.transparent,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(28))),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Get Started',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                ],
+                              )),
+                        ),
+                      );
+                    }
+                )),
+            SizedBox(
+              width: 16,
+            ),
+            Container(
+              width: 56,
+              height: 56,
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(.1),
+                borderRadius: BorderRadius.circular(28),
+                border:
+                Border.all(color: Colors.white.withOpacity(.2), width: 1),
+              ),
+              child: IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.play_arrow,
+                    color: Colors.white,
+                    size: 24,
+                  )),
+            )
+          ],
+        )
+      ],
     );
   }
 
